@@ -1,4 +1,10 @@
-GridPane{
+VBox{
     -fx-background-image: url("./images/background.png");
 
+}
+#pipeDown{
+    -fx-image: url("./images/down_pipe.png");
+}
+#pipeUp{
+    -fx-image: url("./images/up_pipe.png");
 }

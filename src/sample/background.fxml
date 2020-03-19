@@ -12,9 +12,11 @@
 <VBox fx:controller="sample.Controller"
       xmlns:fx="http://javafx.com/fxml" alignment="center" >
     <HBox>
+
         <padding>
             <Insets bottom="20"></Insets>
         </padding>
+        <children>
         <ImageView id="pipeDown">
 
         </ImageView>
@@ -22,14 +24,18 @@
         <ImageView id="pipeDown">
 
         </ImageView>
+        </children>
     </HBox>
     <HBox>
+
         <padding>
             <Insets top="20"></Insets>
         </padding>
+        <children>
         <ImageView id="pipeUp">
         </ImageView>
         <ImageView id="pipeUp">
         </ImageView>
+        </children>
     </HBox>
 </VBox>

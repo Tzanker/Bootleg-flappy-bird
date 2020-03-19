@@ -1,4 +1,6 @@
 package sample;
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.ImageInput;
@@ -19,12 +21,27 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        VBox root = FXMLLoader.load(getClass().getResource("background.fxml"));
-        root.getStylesheets().add(getClass().getResource("./resources/Main.css").toExternalForm());
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 512));
+        primaryStage.setTitle("Bootleg Flappy Bird");
+        Group root = new Group();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        Canvas canvas = new Canvas(500,512);
+        root.getChildren().add(canvas);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        Image background = new Image(getClass().getResourceAsStream("resources/images/background.png"));
+        Image downpipe = new Image(getClass().getResourceAsStream("resources/images/down_pipe.png"));
+        Image uppipe = new Image(getClass().getResourceAsStream("resources/images/up_pipe.png"));
+        final long startNanoTime = System.nanoTime();
+        new AnimationTimer(){
+            public void handle(long currentNanoTime){
+                double t = (currentNanoTime - startNanoTime)/1000000000.0;
+                gc.drawImage(background, 0, 0);
+                gc.drawImage(background, 288, 0);
+                gc.drawImage(downpipe, 250 + 250*Math.sin(t), -600);
+                gc.drawImage(uppipe, 250 + 250*Math.sin(t), 400);
+            }
+        }.start();
         primaryStage.show();
-
     }
 
 

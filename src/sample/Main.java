@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Translate;
 import javafx.application.Application;
@@ -24,17 +25,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        final int WIDTHMULT = 4;
         primaryStage.setTitle("Bootleg Flappy Bird");
         Group root = new Group();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        Canvas canvas = new Canvas(500,512);
+        Canvas canvas = new Canvas(288*WIDTHMULT,512);
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Image background = new Image(getClass().getResourceAsStream("resources/images/background.png"));
-        Sprite downpipe = new Sprite("resources/images/down_pipe.png");
-        Sprite uppipe = new Sprite("resources/images/up_pipe.png");
-        Sprite bird = new Sprite("resources/images/bird1.png");
+        Sprite bird = new Sprite("resources/images/bird1.png",0);
         bird.setPos(250, 256);
         bird.setAcc(0,981);
         ArrayList<Integer> input = new ArrayList<Integer>();
@@ -50,30 +50,46 @@ public class Main extends Application {
                     }
                 }
         );
+        ArrayList<Pipe> pipeList = new ArrayList();
+        Pipe pipe = new Pipe(-200, 4, 0);
+        pipeList.add(pipe);
 
+        intVal framecount = new intVal(0);
         final long startNanoTime = System.nanoTime();
         new AnimationTimer(){
             public void handle(long currentNanoTime){
+                framecount.val = ((framecount.val ==60)? 0:framecount.val+1);
                 double t = (currentNanoTime - startNanoTime)/1000000000.0;
-                gc.drawImage(background, 0, 0);
-                gc.drawImage(background, 288, 0);
+                for(int i=0; i<=WIDTHMULT; i++){
+                    gc.drawImage(background, 288*i, 0);
+                }
                 if(input.get(0)==1){
                     input.set(0,0);
                     bird.setVel(0,-400);
                 }
-                bird.update(t);
-                downpipe.setPos(250 + 250*Math.sin(t), -600);
-                uppipe.setPos(250 + 250*Math.sin(t), 400);
-                if(bird.intersects(uppipe) || bird.intersects(downpipe)){
-                    Image gameOver = new Image(getClass().getResourceAsStream("resources/images/game_over.png"));
-                    gc.drawImage(gameOver, 250, 256);
-                    bird.setVel(0,500);
+                if(framecount.val % 60 ==0){
+                    Pipe newPipe = new Pipe(-200, 4, t);
+                    pipeList.add(newPipe);
                 }
-                uppipe.render(gc);
-                downpipe.render(gc);
-                bird.render(gc);
+                for (int j =0; j<pipeList.size(); j++){
+                    pipeList.get(j);
 
-                System.out.println(t);
+                    pipeList.get(j).update(t);
+                    if(pipeList.get(j).intersects(bird)){
+                        Image gameOver = new Image(getClass().getResourceAsStream("resources/images/game_over.png"));
+                        gc.drawImage(gameOver, 250, 256);
+                        bird.setVel(0,500);
+                    }
+                    pipeList.get(j).render(gc);
+                    System.out.println(pipeList.size());
+                    if(pipeList.get(j).getPosX()<=-138){
+                        pipeList.remove(pipeList.get(j));
+                    }
+
+                }
+                bird.update(t);
+                bird.render(gc);
+                System.out.println(framecount.val);
             }
         }.start();
         primaryStage.show();

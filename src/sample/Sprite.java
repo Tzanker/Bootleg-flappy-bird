@@ -21,14 +21,16 @@ public class Sprite {
         velY=0;
         accX=0;
         accY=0;
+        lastRelTime=0;
     }
-    public Sprite(String filename){
+    public Sprite(String filename, double t){
         posX = 0;
         posY = 0;
         velX=0;
         velY=0;
         accX=0;
         accY=0;
+        lastRelTime=t;
         Image i = new Image(getClass().getResourceAsStream(filename));
         setImage(i);
     }
@@ -69,6 +71,9 @@ public class Sprite {
         posX += velX * time;
         posY += velY * time;
         lastRelTime=t;
+    }
+    public double getPosX(){
+        return posX;
     }
     public void render(GraphicsContext gc)
     {

@@ -34,11 +34,26 @@ public class Sprite {
         Image i = new Image(getClass().getResourceAsStream(filename));
         setImage(i);
     }
+    public Sprite(String filename, double t, double height, double width){
+        posX = 0;
+        posY = 0;
+        velX=0;
+        velY=0;
+        accX=0;
+        accY=0;
+        lastRelTime=t;
+        Image i = new Image(getClass().getResourceAsStream(filename), height, width, true, true);
+        setImage(i);
+    }
 
     public void setImage(Image i){
         image = i;
         width = i.getWidth();
         height = i.getHeight();
+    }
+    public void hitBox(int w, int h){
+        width = w;
+        height = h;
     }
     public void setImage(String filename){
         Image i = new Image(getClass().getResourceAsStream(filename));

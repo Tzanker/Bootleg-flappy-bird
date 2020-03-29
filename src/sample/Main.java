@@ -34,7 +34,7 @@ public class Main extends Application {
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Image background = new Image(getClass().getResourceAsStream("resources/images/background.png"));
-        Sprite bird = new Sprite("resources/images/bird1.png",0);
+        Sprite bird = new Sprite("resources/images/bird1.png",0, 64, 90);
         bird.setPos(250, 256);
         bird.setAcc(0,981);
         ArrayList<Integer> input = new ArrayList<Integer>();
@@ -67,7 +67,7 @@ public class Main extends Application {
                     input.set(0,0);
                     bird.setVel(0,-400);
                 }
-                if(framecount.val % 60 ==0){
+                if(framecount.val ==60){
                     Pipe newPipe = new Pipe(-200, 4, t);
                     pipeList.add(newPipe);
                 }

@@ -24,10 +24,13 @@ public class Pipe {
 //        up.setVel(vel, 0);
 //    }
     public Pipe(double velX, int widthmult, double time) {
+        System.out.println("start Pipe - random");
         up = new Sprite("resources/images/up_pipe.png", time);
         down = new Sprite("resources/images/down_pipe.png", time);
         spacing = 64*2  + 64*4*Math.random();
+        System.out.println(spacing);
         posY = 200 + 200*Math.random();
+        System.out.println(posY);
         vel = velX;
         posX = 288*widthmult;
         down.setPos(288*widthmult, posY-spacing-PIPEHEIGHT);

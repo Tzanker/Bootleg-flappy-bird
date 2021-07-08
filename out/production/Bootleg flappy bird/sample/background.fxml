@@ -1,0 +1,41 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.scene.shape.Box?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox fx:controller="sample.Controller"
+      xmlns:fx="http://javafx.com/fxml" alignment="center" >
+    <HBox>
+
+        <padding>
+            <Insets bottom="20"></Insets>
+        </padding>
+        <children>
+        <ImageView id="pipeDown">
+
+        </ImageView>
+
+        <ImageView id="pipeDown">
+
+        </ImageView>
+        </children>
+    </HBox>
+    <HBox>
+
+        <padding>
+            <Insets top="20"></Insets>
+        </padding>
+        <children>
+        <ImageView id="pipeUp">
+        </ImageView>
+        <ImageView id="pipeUp">
+        </ImageView>
+        </children>
+    </HBox>
+</VBox>
